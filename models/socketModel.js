@@ -28,7 +28,12 @@ model.findOrCreateUser = function(user) {
     var i = clients.length;
     for(; --i >= 0; ) {
         if(clients[i].name === user.name) {
-            return clients[i];
+            if(clients[i].socket.id === user.socket.id) {
+                return clients[i];
+            }
+            else {
+                return null;
+            }
         }
     }
 
@@ -39,30 +44,44 @@ model.findOrCreateUser = function(user) {
 model.findUserBySocket = function(socket){
     var i = clients.length;
 
-    for(; i-- >= 0;) {
-        if (clients[i].socket.id === socket.id) {
-            return clients[i];
+    if(i > 0) {
+        for (; i-- >= 0;) {
+            if (clients[i].socket.id === socket.id) {
+                return clients[i];
+            }
         }
     }
 };
 
+model.indexOfSocket = function(socket) {
+    var i = clients.length;
+    if(i > 0) {
+        for (; --i >= 0;) {
+            if (clients[i].socket.id === socket.id) {
+                return i;
+            }
+        }
+    }
+    return -1;
+};
+
 model.removeUser = function(user) {
     var i = clients.length;
-    for(; --i >= 0; ) {
-        if(clients[i].name === user.name) {
-            return clients.splice(i, 1)[0];
+    if(i > 0) {
+        for (; --i >= 0;) {
+            if (clients[i].name === user.name) {
+                return clients.splice(i, 1)[0];
+            }
         }
     }
     return false;
 };
 
 model.removeUserBySocket = function(socket) {
-    var i = clients.length;
+    var index = this.indexOfSocket(socket);
 
-    for(; i-- >= 0;) {
-        if (clients[i].socket.id === socket.id) {
-            return clients.splice(i, 1)[0];
-        }
+    if(index > -1) {
+        return clients.splice(index, 1)[0];
     }
     return false;
 };

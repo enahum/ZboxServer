@@ -11,10 +11,9 @@ var expect = require('chai').expect,
     connected = false,
     client = null;
 
-
 describe('Socket Client', function() {
+    client = io.connect(socketURL);
     before(function(done){
-        client = io.connect(socketURL);
 
         client.on('connect', function () {
             connected = true;
@@ -22,8 +21,11 @@ describe('Socket Client', function() {
         });
     });
 
-    it('it should be connected and login', function (done) {
+    it('it should be connected and login nd not receive the logged notification', function (done) {
         expect(connected).to.be.true;
+        client.on('signed', function(username){
+           expect.fail('Recibido el usuario ' + username);
+        });
         client.emit('login', {name: 'Elias'}, function(data){
             expect(data).to.be.true;
             done();
@@ -39,10 +41,16 @@ describe('Socket Client', function() {
         });
     });
 
-    it('it should disconnect', function (done) {
+    it('it should disconnect and the other users should get the logout info', function (done) {
         expect(connected).to.be.true;
+        var c = io.connect(socketURL, {'force new connection': true});
+        c.on('connect', function(){
+            c.on('logout', function(data){
+                expect(data).to.be.ok;
+                done();
+            })
+        });
         client.disconnect();
         expect(client.disconnected).to.be.true;
-        done();
     });
 });

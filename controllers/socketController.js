@@ -17,22 +17,40 @@ controller.login = function(socket, user, fn){
         return fn(false);
     }
     user.socket = socket;
-    model.findOrCreateUser(user);
-    log.info(user.name + ' connected');
-    if(fn && typeof fn === typeof Function) {
-        fn(true);
+    if(model.findOrCreateUser(user)) {
+        log.info(user.name + ' connected');
+        if (fn && typeof fn === typeof Function) {
+            fn(true);
+        }
+        socket.broadcast.emit('signed', username);
     }
-    socket.emit('refresh');
+    else {
+        if (fn && typeof fn === typeof Function) {
+            fn(null);
+        }
+    }
 };
 
-controller.logout = function(io, socket) {
+controller.logout = function(socket) {
+  var user = this.findUserBySocket(socket);
+    if(user) {
+        log.info(user.name + ' has logout');
+        return socket.broadcast.emit('logout', user.name);
+    }
+};
+
+controller.disconnect = function(io, socket) {
     var user = model.removeUserBySocket(socket);
     if(user) {
-        log.info(user.name + ' disconnected');
-        controller.list(function(userList){
-            io.emit('refresh', userList);
-        });
+        log.info(user.name + ' has disconnected');
+       return socket.broadcast.emit('logout', user.name);
     }
+
+    socket.broadcast.emit('logout', undefined);
+};
+
+controller.get = function(socket) {
+    return model.findUserBySocket(socket);
 };
 
 module.exports = controller;

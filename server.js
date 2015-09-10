@@ -34,9 +34,14 @@ io.listen(server);
 
 io.on('connection', function(socket) {
     log.info('someone connected');
+    var u = controller.get(socket);
+    if(u) {
+        log.info('connection is ' + u.name);
+    }
     socket.on('list', controller.list);
     socket.on('login', controller.login.bind(undefined, socket));
-    socket.on('disconnect', controller.logout.bind(undefined, io, socket));
+    socket.on('logout', controller.logout.bind(undefined, socket));
+    socket.on('disconnect', controller.disconnect.bind(undefined, io, socket));
 });
 
 /**
