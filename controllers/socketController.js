@@ -17,12 +17,13 @@ controller.login = function(socket, user, fn){
         return fn(false);
     }
     user.socket = socket;
+    user.date = new Date();
     if(model.findOrCreateUser(user)) {
         log.info(user.name + ' connected');
         if (fn && typeof fn === typeof Function) {
             fn(true);
         }
-        socket.broadcast.emit('signed', username);
+        socket.broadcast.emit('signed', { name: username, date: user.date });
     }
     else {
         if (fn && typeof fn === typeof Function) {
