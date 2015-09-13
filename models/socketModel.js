@@ -2,32 +2,22 @@
  * Created by enahum on 08-09-15.
  */
 var clients = [],
-    model = {},
-    removeCircular = function(cache, key, value) {
-        if (typeof value === 'object' && value !== null) {
-            if (cache.indexOf(value) !== -1) {
-                // Circular reference found, discard key
-                return;
-            }
-            // Store value in our collection
-            cache.push(value);
-        }
-        return value;
-    };
+    model = {};
 
-model.findAll = function() {
-    var cache = [];
-    var cs = JSON.parse(JSON.stringify(clients, removeCircular.bind(undefined, cache))), i = cs.length;
-    for(; --i >= 0;) {
-        delete cs[i].socket;
-    }
-    return cs;
+model.findAll = function(socket) {
+    return clients.map(function(c){
+        if(c.socket.id !== socket.id) {
+            return {name: c.name, date: c.date, image: c.image};
+        }
+    }).filter(function(c){
+        return c !== undefined;
+    });
 };
 
 model.findOrCreateUser = function(user) {
     var i = clients.length;
     for(; --i >= 0; ) {
-        if(clients[i].name === user.name) {
+        if(clients[i].name.toLowerCase() === user.name.toLowerCase()) {
             if(clients[i].socket.id === user.socket.id) {
                 return clients[i];
             }
@@ -41,6 +31,16 @@ model.findOrCreateUser = function(user) {
     return user;
 };
 
+model.findUserByName = function(username) {
+    var i = clients.length;
+    for(; --i >= 0; ) {
+        if(clients[i].name === username) {
+            return clients[i];
+        }
+    }
+    return null;
+};
+
 model.findUserBySocket = function(socket){
     var i = clients.length;
 
@@ -51,6 +51,8 @@ model.findUserBySocket = function(socket){
             }
         }
     }
+
+    return null;
 };
 
 model.indexOfSocket = function(socket) {
@@ -84,6 +86,12 @@ model.removeUserBySocket = function(socket) {
         return clients.splice(index, 1)[0];
     }
     return false;
+};
+
+model.findUsersInRoom = function(room) {
+  return clients.filter(function(c) {
+      return c.room === room;
+  });
 };
 
 module.exports = model;

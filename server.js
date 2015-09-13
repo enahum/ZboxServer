@@ -34,12 +34,13 @@ io.listen(server);
 
 io.on('connection', function(socket) {
     log.info('someone connected');
-    var u = controller.get(socket);
-    if(u) {
-        log.info('connection is ' + u.name);
-    }
-    socket.on('list', controller.list);
+    socket.on('list', controller.list.bind(undefined, socket));
     socket.on('login', controller.login.bind(undefined, socket));
+    socket.on('call', controller.call.bind(undefined, io, socket));
+    socket.on('noresponse', controller.noResponse.bind(undefined, io, socket));
+    socket.on('pickup', controller.pickup.bind(undefined, io, socket));
+    socket.on('reject', controller.reject.bind(undefined, io, socket));
+    socket.on('hangup', controller.hangup.bind(undefined, io, socket));
     socket.on('logout', controller.logout.bind(undefined, socket));
     socket.on('disconnect', controller.disconnect.bind(undefined, io, socket));
 });
