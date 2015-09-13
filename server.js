@@ -6,7 +6,7 @@ var log = require('./libs/log')(module),
     SocketServer = require('socket.io'),
     fs = require('fs'),
     secure = config.get("sslSettings:enabled"),
-    port = normalizePort(secure ? config.get("ssl") : config.get("port")),
+    port = normalizePort(process.env.PORT || config.get("port")),
     controller = require('./controllers/socketController'),
     server_handler = function (req, res) {
         res.writeHead(404);
