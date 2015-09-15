@@ -6,7 +6,7 @@ var log = require('./libs/log')(module),
     SocketServer = require('socket.io'),
     fs = require('fs'),
     secure = config.get("sslSettings:enabled"),
-    port = normalizePort(process.env.PORT || config.get("port")),
+    port = normalizePort(secure ? config.get("ssl") : process.env.PORT || config.get("port")),
     controller = require('./controllers/socketController'),
     server_handler = function (req, res) {
         res.writeHead(404);
@@ -34,15 +34,15 @@ io.listen(server);
 
 io.on('connection', function(socket) {
     log.info('someone connected');
-    socket.on('list', controller.list.bind(undefined, socket));
     socket.on('login', controller.login.bind(undefined, socket));
+    socket.on('list', controller.getAll.bind(undefined, socket));
     socket.on('call', controller.call.bind(undefined, io, socket));
     socket.on('noresponse', controller.noResponse.bind(undefined, io, socket));
     socket.on('pickup', controller.pickup.bind(undefined, io, socket));
     socket.on('reject', controller.reject.bind(undefined, io, socket));
     socket.on('hangup', controller.hangup.bind(undefined, io, socket));
     socket.on('logout', controller.logout.bind(undefined, socket));
-    socket.on('disconnect', controller.disconnect.bind(undefined, io, socket));
+    socket.on('disconnect', controller.logout.bind(undefined, socket));
 });
 
 /**

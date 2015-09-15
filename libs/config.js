@@ -1,3 +1,7 @@
+/**
+ * Carga los archivos de configuración según el entorno
+ * @author Elias Nahum
+ */
 var log = require('./log')(module),
     nconf = require('nconf'),
     watch = require('node-watch'),
