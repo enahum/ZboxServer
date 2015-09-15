@@ -8,9 +8,9 @@ zBox Server está basado en [Socket.io](http://socket.io/) que permite la intera
 ## La aplicación está disponible para Windows, Mac OSX y Linux
 
 Descarga la aplicación para tu plataforma:
-* [Windows 32-bit](http://github.com/enahum/zBoxTest/releases/download/v1.1.0/zbox-1.1.0-win32-ia32.zip) o [Windows 64-bit](http://github.com/enahum/zBoxTest/releases/download/v1.1.0/zbox-1.1.0-win32-x64.zip)
-* [Mac OSX](http://github.com/enahum/zBoxTest/releases/download/v1.1.0/zbox-1.1.0-darwin-x64.zip)
-* [Linux](http://github.com/enahum/zBoxTest/releases/download/v1.1.0/zbox-1.1.0-win32-x64.zip)
+* [Windows 32-bit](http://github.com/enahum/zBoxTest/releases/download/v1.1.1/zbox-1.1.1-win32-ia32.zip) o [Windows 64-bit](http://github.com/enahum/zBoxTest/releases/download/v1.1.1/zbox-1.1.1-win32-x64.zip)
+* [Mac OSX](http://github.com/enahum/zBoxTest/releases/download/v1.1.1/zbox-1.1.1-darwin-x64.zip)
+* [Linux](http://github.com/enahum/zBoxTest/releases/download/v1.1.1/zbox-1.1.1-win32-x64.zip)
 
 ## Como ejecutarlo
 1. Descomprime el archivo .zip
