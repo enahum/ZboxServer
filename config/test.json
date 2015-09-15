@@ -1,8 +1,8 @@
 {
-  "port": 3000,
-  "ssl": 4430,
+  "port": 80,
+  "ssl": 443,
   "logLevel": 3,
-  "host": "localhost",
+  "host": "zbox.herokuapp.com",
   "sslSettings" : {
     "enabled": false,
     "key": null,

@@ -8,7 +8,7 @@ var expect = require('chai').expect,
     secure = config.get("sslSettings:enabled"),
     port = secure ? config.get("ssl") : config.get("port"),
     protocol = secure ? 'https' : 'http',
-    socketURL= protocol +"://localhost:" + port,
+    socketURL= protocol +"://" + config.get("host") + ":" + port,
     connected = false, connected2 = true,
     client = null, client2 = null, room = null;
 

@@ -1,7 +1,8 @@
 # zBox Server - Desafío Dev. Node.js
 
-[![Build Status](https://travis-ci.org/atom/electron.svg?branch=master)](https://travis-ci.org/atom/electron)
-[![devDependency Status](https://david-dm.org/atom/electron/dev-status.svg)](https://david-dm.org/atom/electron#info=devDependencies)
+[![Build Status](https://travis-ci.org/enahum/zBoxServer.svg)](https://travis-ci.org/enahum/zBoxServer)
+[![Dependency Status](https://david-dm.org/enahum/zBoxServer.svg)](https://david-dm.org/enahum/zBoxServer)
+[![devDependency Status](https://david-dm.org/enahum/zBoxServer/dev-status.svg)](https://david-dm.org/enahum/zBoxServer#info=devDependencies)
 
 zBox Server está basado en [Socket.io](http://socket.io/) que permite la interacción entre varios clientes.
 

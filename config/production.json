@@ -1,5 +1,6 @@
 {
-  "port": 3000,
-  "ssl": 4430,
-  "enableSSL": false
+  "port": 80,
+  "ssl": 443,
+  "enableSSL": false,
+  "host": "zbox.herokuapp.com"
 }
